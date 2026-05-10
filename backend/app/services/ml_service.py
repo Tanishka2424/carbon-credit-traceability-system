@@ -5,7 +5,8 @@ import pickle
 import os
 from app.utils.baseline import EMISSION_FACTORS
 
-MATERIAL_ENCODING = {"cement": 0, "steel": 1, "aluminum": 2}
+# Auto-build encoding from EMISSION_FACTORS so it's always in sync with all 8 materials
+MATERIAL_ENCODING = {mat: idx for idx, mat in enumerate(EMISSION_FACTORS.keys())}
 
 class MLService:
     """

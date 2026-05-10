@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://carbon-credit-djk1.onrender.com/api/:path*"
+    }
+  ]
+}

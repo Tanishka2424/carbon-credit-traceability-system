@@ -1,0 +1,41 @@
+.page { max-width: 1200px; }
+.header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 28px; }
+.title { font-size: 1.6rem; font-weight: 800; color: #e2e8f0; margin: 0 0 4px; }
+.sub   { color: #64748b; font-size: 14px; margin: 0; }
+.refreshBtn { padding: 8px 16px; border-radius: 8px; background: rgba(99,102,241,0.1); border: 1px solid rgba(99,102,241,0.2); color: #818cf8; font-size: 13px; cursor: pointer; transition: all 0.2s; }
+.refreshBtn:hover { background: rgba(99,102,241,0.2); }
+
+.statsGrid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-bottom: 28px; }
+.statCard {
+  background: rgba(15,23,42,0.8); border: 1px solid rgba(99,102,241,0.12);
+  border-radius: 12px; padding: 20px;
+  border-top: 3px solid var(--accent, #6366f1);
+}
+.skeletonCard { background: rgba(15,23,42,0.5); border-radius: 12px; height: 90px; animation: pulse 1.5s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:0.4} 50%{opacity:0.7} }
+.statLabel { font-size: 11px; color: #64748b; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+.statValue { font-size: 1.6rem; font-weight: 800; color: #e2e8f0; font-family: 'DM Mono', monospace; }
+.statSub   { font-size: 11px; color: #475569; margin-top: 4px; }
+
+.tableCard { background: rgba(15,23,42,0.6); border: 1px solid rgba(99,102,241,0.1); border-radius: 12px; overflow: hidden; }
+.tableHeader { display: flex; align-items: center; justify-content: space-between; padding: 18px 20px; border-bottom: 1px solid rgba(99,102,241,0.08); }
+.cardTitle { font-size: 14px; font-weight: 700; color: #c7d2fe; }
+.viewAll { background: none; border: none; color: #818cf8; font-size: 13px; cursor: pointer; }
+.viewAll:hover { color: #c7d2fe; }
+
+.table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.table th { padding: 10px 16px; text-align: left; font-size: 11px; font-weight: 600; color: #475569; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid rgba(99,102,241,0.08); }
+.table td { padding: 12px 16px; border-bottom: 1px solid rgba(99,102,241,0.05); color: #94a3b8; }
+.clickRow { cursor: pointer; transition: background 0.15s; }
+.clickRow:hover td { background: rgba(99,102,241,0.05); }
+.company { font-weight: 600; color: #e2e8f0; }
+.mat { background: rgba(99,102,241,0.1); color: #818cf8; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; text-transform: capitalize; }
+.credits { color: #4ac864; font-weight: 600; }
+.date { font-size: 12px; color: #475569; }
+.empty { text-align: center; color: #475569; padding: 40px; }
+
+.badge { padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
+.badgeApproved  { background: rgba(74,200,100,0.1);  color: #4ac864; }
+.badgeRejected  { background: rgba(248,113,113,0.1); color: #f87171; }
+.badgeNorm      { background: rgba(99,102,241,0.1);  color: #818cf8; }
+.badgeSusp      { background: rgba(251,191,36,0.1);  color: #fbbf24; }

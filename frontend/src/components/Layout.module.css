@@ -130,3 +130,40 @@
   overflow-y: auto;
   max-width: 1100px;
 }
+
+.companyInfo {
+  margin-bottom: 10px;
+}
+
+.companyName {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.companyId {
+  font-size: 0.68rem;
+  color: var(--text3);
+  font-family: var(--font-mono);
+  margin-top: 2px;
+}
+
+.logoutBtn {
+  width: 100%;
+  padding: 7px 0;
+  margin-top: 8px;
+  border-radius: 6px;
+  background: rgba(239, 68, 68, 0.07);
+  border: 1px solid rgba(239, 68, 68, 0.18);
+  color: #f87171;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.logoutBtn:hover {
+  background: rgba(239, 68, 68, 0.14);
+}

@@ -26,9 +26,45 @@ EMISSION_FACTORS: dict[str, dict] = {
         "source": "IPCC 2006 Guidelines, Vol 3, Ch 4",
         "tolerance_pct": 18.0,
     },
+    "coal": {
+        "factor": 2.42,
+        "unit": "t CO2 / t coal",
+        "description": "Bituminous coal combustion",
+        "source": "IPCC 2006 Guidelines, Vol 2, Ch 2",
+        "tolerance_pct": 12.0,
+    },
+    "natural_gas": {
+        "factor": 2.75,
+        "unit": "t CO2 / t natural gas",
+        "description": "Natural gas combustion (per tonne equivalent)",
+        "source": "IEA Emissions Factors, 2023",
+        "tolerance_pct": 10.0,
+    },
+    "paper": {
+        "factor": 1.0,
+        "unit": "t CO2 / t paper",
+        "description": "Paper and pulp manufacturing",
+        "source": "IPCC 2006 Guidelines, Vol 3, Ch 7",
+        "tolerance_pct": 20.0,
+    },
+    "glass": {
+        "factor": 0.85,
+        "unit": "t CO2 / t glass",
+        "description": "Flat and container glass production",
+        "source": "European Glass Federation, 2022",
+        "tolerance_pct": 18.0,
+    },
+    "plastics": {
+        "factor": 1.90,
+        "unit": "t CO2 / t plastics",
+        "description": "Thermoplastic polymer production",
+        "source": "IPCC 2006 Guidelines, Vol 3, Ch 6",
+        "tolerance_pct": 22.0,
+    },
 }
 
 SUPPORTED_MATERIALS = list(EMISSION_FACTORS.keys())
+
 
 def get_baseline(material: str, quantity_tonnes: float) -> dict:
     """

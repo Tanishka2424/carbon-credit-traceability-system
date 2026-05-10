@@ -18,7 +18,7 @@ async def health_check():
         "status": "ok",
         "database": db_status,
         "supported_materials": list(EMISSION_FACTORS.keys()),
-        "version": "1.0.0",
+        "version": "2.0.0",
     }
 
 @router.get("/baseline-factors")

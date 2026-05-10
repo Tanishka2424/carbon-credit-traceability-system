@@ -7,21 +7,34 @@
   flex-wrap: wrap;
   gap: 12px;
 }
-.title { font-size: 2rem; margin-bottom: 4px; }
+.title { font-size: 1.8rem; margin-bottom: 4px; }
+.companyName { color: var(--green); }
 .sub { color: var(--text2); font-size: 0.9rem; }
+.lastUpdated { font-family: var(--font-mono); font-size: 0.78rem; color: var(--text3); }
+
+.headerActions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+
+.autoRefreshToggle {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 0.8rem; color: var(--text3); cursor: pointer;
+}
+.autoRefreshToggle input { accent-color: var(--green); cursor: pointer; }
+
+.refreshBtn {
+  padding: 8px 12px; border-radius: var(--r2);
+  background: var(--surface); border: 1px solid var(--border);
+  color: var(--text2); font-size: 1rem; cursor: pointer; transition: all 0.15s;
+}
+.refreshBtn:hover:not(:disabled) { color: var(--green); border-color: var(--border2); }
+.refreshBtn:disabled { opacity: 0.4; cursor: not-allowed; }
 
 .ctaBtn {
-  background: var(--green);
-  color: var(--bg);
-  border: none;
-  padding: 10px 20px;
-  border-radius: var(--r2);
-  font-size: 0.88rem;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  transition: opacity 0.15s;
+  background: var(--green); color: var(--bg); border: none;
+  padding: 10px 20px; border-radius: var(--r2);
+  font-size: 0.88rem; font-weight: 700; letter-spacing: 0.02em; transition: opacity 0.15s;
 }
 .ctaBtn:hover { opacity: 0.85; }
+.submitLink { background: none; border: none; color: var(--green); cursor: pointer; font-size: inherit; text-decoration: underline; }
 
 .statsGrid {
   display: grid;

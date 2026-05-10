@@ -23,7 +23,9 @@ export default function MarketplacePage() {
   const [showBuy, setShowBuy]   = useState(false)
 
   const live = MOCK_LISTINGS.filter(l => l.status === 'live')
-  const avgPrice = (live.reduce((a, b) => a + b.price, 0) / live.length).toFixed(2)
+  const avgPrice = live.length > 0
+    ? (live.reduce((a, b) => a + b.price, 0) / live.length).toFixed(2)
+    : '0.00'
   const totalCCT = live.reduce((a, b) => a + b.credits, 0)
 
   return (

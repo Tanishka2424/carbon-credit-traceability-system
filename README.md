@@ -1,179 +1,341 @@
 # Carbon Credit Tracer (CCT)
-AI + Blockchain-based carbon emission verification and credit issuance system.
+
+> **AI-powered carbon emission verification and credit issuance platform.**  
+> Industrial companies submit CO₂ reports → IPCC baseline check → AI fraud detection → Carbon credits awarded.
+
+🌐 **Live Demo:** https://carbon-credit-frontend.onrender.com  
+🔧 **API Docs:** https://carbon-credit-api-7845.onrender.com/docs
 
 ---
 
-## Architecture
+## 📸 Features
 
-```
-Company Report
-    ↓
-Baseline Lookup (IPCC table)        ← baseline = quantity × emission_factor
-    ↓
-AI Anomaly Detection (Isolation Forest) ← is this report suspicious?
-    ↓
-Credit Formula                      ← credits = baseline − reported
-    ↓
-MongoDB storage + Blockchain (Polygon, future)
-    ↓
-CCT Token Marketplace
-```
-
-## Supported materials
-
-| Material | IPCC Factor | Source |
-|---|---|---|
-| Cement   | 0.90 t CO₂/t | IPCC 2006 Guidelines |
-| Steel    | 1.80 t CO₂/t | World Steel Association |
-| Aluminum | 11.50 t CO₂/t | IPCC 2006 Guidelines |
+- ✅ Company registration with OTP email verification
+- ✅ Google OAuth sign-in
+- ✅ IPCC-sourced emission baseline for 8 industrial materials
+- ✅ AI anomaly detection (Isolation Forest) to catch fraudulent reports
+- ✅ Carbon credit (CCT) token issuance for genuine emission reductions
+- ✅ Company dashboard — stats, charts, submission history
+- ✅ Admin portal — monitor all companies, send correction emails
+- ✅ CCT Marketplace UI (smart contract integration: future roadmap)
 
 ---
 
-## Quick start (Docker)
+## 🧰 Tech Stack
 
+| Layer | Technology |
+|-------|-----------|
+| Frontend | React 18 + Vite + CSS Modules |
+| Routing | React Router v6 |
+| HTTP Client | Axios (JWT interceptors) |
+| Google Auth | @react-oauth/google |
+| Backend | FastAPI (Python 3.14) |
+| Database | MongoDB Atlas + Motor (async) |
+| AI Model | scikit-learn — IsolationForest |
+| Auth | JWT (python-jose) + bcrypt |
+| Email | fastapi-mail + Gmail SMTP |
+| Deployment | Render (backend + frontend static site) |
+
+---
+
+## 🚀 Quick Start (Local)
+
+### Prerequisites
+- Python 3.10+
+- Node.js 18+
+- MongoDB running locally OR MongoDB Atlas connection string
+
+### 1. Clone
 ```bash
-git clone <repo>
-cd carbon-credit-tracer
-docker-compose up
+git clone https://github.com/PanthDhoriyani/Carbon_credit.git
+cd Carbon_credit
 ```
 
-- Frontend: http://localhost:5173
-- Backend API: http://localhost:8000
-- API docs: http://localhost:8000/docs
-
----
-
-## Manual setup
-
-### Backend
+### 2. Backend
 ```bash
 cd backend
-python -m venv venv
-source venv/bin/activate      # Windows: venv\Scripts\activate
-pip install -r requirements.txt
-cp .env.example .env          # set your MONGODB_URL
-uvicorn main:app --reload
-```
 
-### Frontend
+# Windows
+python -m venv venv
+.\venv\Scripts\activate
+
+# macOS / Linux
+python3 -m venv venv
+source venv/bin/activate
+
+pip install -r requirements.txt
+cp .env.example .env       # fill in your values
+python main.py
+```
+Backend runs at: **http://localhost:8000**  
+Swagger docs: **http://localhost:8000/docs**
+
+### 3. Frontend
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
+Frontend runs at: **http://localhost:5173**
 
 ---
 
-## API endpoints
+## ⚙️ Environment Variables
 
-| Method | Endpoint | Description |
-|---|---|---|
-| GET  | /api/health | Health check + supported materials |
-| GET  | /api/baseline-factors | IPCC emission factors |
-| POST | /api/submissions/ | Submit emission report |
-| GET  | /api/submissions/ | List all submissions |
-| GET  | /api/submissions/{id} | Get single submission |
-| GET  | /api/dashboard/stats | Aggregate stats |
-| GET  | /api/dashboard/recent | Recent submissions |
-| GET  | /api/dashboard/credits-by-material | Credits grouped by material |
+### `backend/.env`
+```env
+MONGODB_URL=mongodb://localhost:27017
+DATABASE_NAME=carbon_credit_tracer
+ALLOWED_ORIGINS=http://localhost:5173
 
-### Example submission request
-```json
-POST /api/submissions/
-{
-  "company_name": "Acme Cement Co",
-  "company_id": "ACME-001",
-  "material": "cement",
-  "quantity_tonnes": 1000,
-  "reported_co2_tonnes": 700,
-  "period": "2024-Q2"
-}
+SECRET_KEY=your-random-64-char-hex
+ALGORITHM=HS256
+ACCESS_TOKEN_EXPIRE_MINUTES=1440
+
+MAIL_USERNAME=your@gmail.com
+MAIL_PASSWORD=your-gmail-app-password
+MAIL_FROM=your@gmail.com
+MAIL_FROM_NAME=Carbon Credit Tracer
+MAIL_SERVER=smtp.gmail.com
+MAIL_PORT=587
+
+GOOGLE_CLIENT_ID=your-google-client-id.apps.googleusercontent.com
+
+# Auto-creates admin on startup if set:
+ADMIN_EMAIL=admin@yourcompany.com
+ADMIN_PASSWORD=StrongPass1
 ```
 
-### Example response
-```json
-{
-  "submission_id": "uuid",
-  "baseline": { "baseline_co2_tonnes": 900.0, "emission_factor": 0.9 },
-  "ai_verification": { "verdict": "NORMAL", "anomaly_score": 0.12 },
-  "credits": { "credits_earned": 200.0, "eligible": true },
-  "final_status": "APPROVED"
-}
+### `frontend/.env.local`
+```env
+VITE_GOOGLE_CLIENT_ID=your-google-client-id.apps.googleusercontent.com
+# For production only (leave blank in dev — Vite proxy handles it):
+VITE_API_URL=https://your-api.onrender.com
 ```
 
 ---
 
-## Project structure
+## 📁 Project Structure
 
 ```
-carbon-credit-tracer/
+carbon-credit-traceability-system/
+│
 ├── backend/
-│   ├── main.py                     # FastAPI app entry point
+│   ├── main.py                        # App entry point, CORS, startup
 │   ├── requirements.txt
-│   ├── Dockerfile
+│   ├── .env                           # Local secrets (not committed)
+│   ├── .env.example
+│   ├── create_admin.py                # Interactive admin creation script
+│   ├── seed_admin_atlas.py            # Non-interactive admin seeder
 │   └── app/
-│       ├── models/
-│       │   └── schemas.py          # Pydantic request/response models
 │       ├── routes/
-│       │   ├── submissions.py      # POST/GET submission endpoints
-│       │   ├── dashboard.py        # Stats and analytics endpoints
-│       │   └── health.py           # Health check + baseline factors
+│       │   ├── auth.py                # Register, Login, OTP, Google OAuth
+│       │   ├── submissions.py         # Emission report CRUD
+│       │   ├── dashboard.py           # Stats, charts, recent feed
+│       │   ├── admin.py               # Admin: companies, reports, emails
+│       │   └── health.py              # /api/health, /api/baseline-factors
+│       ├── models/
+│       │   ├── schemas.py             # Submission request/response models
+│       │   ├── user_schemas.py        # Auth models (register, login, OTP)
+│       │   ├── isolation_forest.pkl   # Trained AI model (binary)
+│       │   └── scaler.pkl             # Feature scaler (binary)
 │       ├── services/
-│       │   ├── ml_service.py       # Isolation Forest anomaly detector
-│       │   └── credit_service.py   # Credit calculation logic
-│       └── utils/
-│           ├── baseline.py         # IPCC emission factor table
-│           └── database.py         # MongoDB async connection
-├── frontend/
-│   ├── src/
-│   │   ├── App.jsx                 # Router setup
-│   │   ├── main.jsx                # React entry point
-│   │   ├── components/
-│   │   │   ├── Layout.jsx          # Sidebar navigation shell
-│   │   │   ├── StatCard.jsx        # Reusable stat display card
-│   │   │   └── StatusBadge.jsx     # APPROVED/REJECTED/NORMAL badges
-│   │   ├── pages/
-│   │   │   ├── DashboardPage.jsx   # Overview stats + charts + feed
-│   │   │   ├── SubmitPage.jsx      # Report form + live preview
-│   │   │   ├── SubmissionsPage.jsx # Full audit table with filters
-│   │   │   ├── SubmissionDetailPage.jsx  # Step-by-step verification view
-│   │   │   └── MarketplacePage.jsx # CCT token trading UI
-│   │   ├── utils/
-│   │   │   └── api.js              # Axios API wrapper
-│   │   └── styles/
-│   │       └── globals.css         # Design tokens + global styles
-│   ├── index.html
-│   └── vite.config.js
-└── docker-compose.yml
+│       │   ├── ml_service.py          # IsolationForest train/load/predict
+│       │   └── credit_service.py      # Credit issuance calculation
+│       ├── utils/
+│       │   ├── auth.py                # JWT, bcrypt, OTP helpers
+│       │   ├── database.py            # MongoDB connect + index creation
+│       │   ├── email.py               # OTP + correction emails via Gmail
+│       │   └── baseline.py            # IPCC emission factors table
+│       └── middleware/
+│           └── logging.py             # Request/response logging
+│
+└── frontend/
+    ├── public/
+    │   └── _redirects                 # Render: all paths → index.html
+    ├── vite.config.js                 # Dev proxy /api → localhost:8000
+    └── src/
+        ├── App.jsx                    # Route definitions
+        ├── utils/
+        │   ├── api.js                 # All API calls (Axios)
+        │   └── auth.js                # Token helpers, logout
+        ├── components/
+        │   ├── ProtectedRoute.jsx     # Auth + admin route guards
+        │   ├── Layout.jsx             # Company portal shell
+        │   ├── AdminLayout.jsx        # Admin portal shell
+        │   ├── StatusBadge.jsx        # APPROVED/REJECTED badges
+        │   └── StatCard.jsx           # Dashboard stat cards
+        └── pages/
+            ├── LandingPage.jsx        # Public homepage
+            ├── LoginPage.jsx          # Email + Google login
+            ├── RegisterPage.jsx       # Register + OTP step
+            ├── DashboardPage.jsx      # Company stats + charts
+            ├── SubmitPage.jsx         # Emission report form
+            ├── SubmissionsPage.jsx    # Report history list
+            ├── SubmissionDetailPage.jsx # Single report detail
+            ├── MarketplacePage.jsx    # CCT token marketplace
+            └── admin/
+                ├── AdminDashboardPage.jsx    # Platform-wide stats
+                ├── AdminCompaniesPage.jsx    # All companies
+                └── AdminSubmissionsPage.jsx  # All reports + correction email
 ```
 
 ---
 
-## AI model
+## 🔄 System Flow
 
-- **Algorithm**: Isolation Forest (scikit-learn)
-- **Features**: reported intensity, baseline intensity, reported/baseline ratio, material encoding
-- **Training**: Synthetic data generated from IPCC factors with realistic ±15% Gaussian noise + injected fraud samples (0.1–0.4× baseline)
-- **Contamination**: 10% (tunable)
-- **Output**: NORMAL / SUSPICIOUS verdict + anomaly score
+```
+User Registration:
+  Fill form → POST /api/auth/register
+  → OTP sent to email (6-digit, 10 min expiry)
+  → POST /api/auth/verify-otp
+  → Account activated + JWT issued → Dashboard
+
+Emission Report Submission:
+  Company submits (material, quantity, reported CO₂, period)
+  → Step 1: IPCC baseline = quantity × emission_factor
+  → Step 2: IsolationForest AI → NORMAL or SUSPICIOUS
+  → Step 3: Credits = baseline − reported  (if NORMAL + reported < baseline)
+  → APPROVED (credits earned) or REJECTED (0 credits)
+  → Saved to MongoDB
+
+Admin Workflow:
+  Monitor all companies + submissions
+  Filter by status, material, company
+  Send "Correction Required" email to company via Gmail SMTP
+```
 
 ---
 
-## Token economy
+## 🤖 AI Model — Isolation Forest
+
+- **Algorithm:** Isolation Forest (scikit-learn, 200 trees, 10% contamination)
+- **Training data:** Synthetic — 8 materials × 300 normal + 40 fraud samples
+  - Normal: reported within ±15% of IPCC baseline (Gaussian noise)
+  - Fraud: reported at only 10–40% of baseline (drastic under-reporting)
+- **Features:**
+  1. `reported_intensity` = reported_CO₂ / quantity
+  2. `baseline_intensity` = IPCC factor
+  3. `ratio` = reported / baseline ← key feature
+  4. `material_encoded` = numeric material ID
+- **Output:** `NORMAL` / `SUSPICIOUS` verdict + anomaly score + confidence
+
+---
+
+## 🌍 IPCC Emission Factors (8 Materials)
+
+| Material | Factor (t CO₂/t) | Source |
+|----------|-----------------|--------|
+| Cement | 0.90 | IPCC 2006 Vol 3 Ch 2 |
+| Steel | 1.80 | World Steel Association 2023 |
+| Aluminum | 11.50 | IPCC 2006 Vol 3 Ch 4 |
+| Coal | 2.42 | IPCC 2006 Vol 2 Ch 2 |
+| Natural Gas | 2.75 | IEA 2023 |
+| Paper | 1.00 | IPCC 2006 Vol 3 Ch 7 |
+| Glass | 0.85 | European Glass Federation 2022 |
+| Plastics | 1.90 | IPCC 2006 Vol 3 Ch 6 |
+
+---
+
+## 🔐 Security
+
+| Feature | Implementation |
+|---------|---------------|
+| Passwords | bcrypt (direct, work factor 12) |
+| Auth tokens | JWT HS256, 24-hour expiry |
+| OTP | 6-digit random, MongoDB TTL index (10 min auto-delete) |
+| Route guards | ProtectedRoute (login) + AdminRoute (role=admin) |
+| CORS | Locked to configured ALLOWED_ORIGINS |
+| Google OAuth | ID token verified server-side via google-auth |
+
+---
+
+## 🌐 API Reference
+
+| Method | Endpoint | Auth | Description |
+|--------|----------|------|-------------|
+| GET | `/api/health` | None | Server + DB status |
+| GET | `/api/baseline-factors` | None | IPCC factors for all materials |
+| POST | `/api/auth/register` | None | Register company |
+| POST | `/api/auth/verify-otp` | None | Verify email OTP |
+| POST | `/api/auth/resend-otp` | None | Resend OTP |
+| POST | `/api/auth/login` | None | Login → JWT token |
+| POST | `/api/auth/google` | None | Google OAuth login |
+| GET | `/api/auth/me` | JWT | Get own profile |
+| POST | `/api/submissions/` | JWT | Submit emission report |
+| GET | `/api/submissions/` | JWT | List own reports |
+| GET | `/api/submissions/{id}` | JWT | Get single report |
+| GET | `/api/dashboard/stats` | JWT | Company dashboard stats |
+| GET | `/api/dashboard/recent` | JWT | Recent submissions |
+| GET | `/api/dashboard/credits-by-material` | JWT | Credits chart data |
+| GET | `/api/admin/stats` | Admin | Platform-wide stats |
+| GET | `/api/admin/companies` | Admin | All companies |
+| GET | `/api/admin/submissions` | Admin | All reports |
+| POST | `/api/admin/notify-correction/{id}` | Admin | Send correction email |
+| DELETE | `/api/admin/companies/{id}` | Admin | Deactivate company |
+
+Full interactive docs: **https://carbon-credit-api-7845.onrender.com/docs**
+
+---
+
+## 🚀 Deployment (Render)
+
+Both services deploy automatically on every `git push` to `main`.
+
+| Service | Type | URL |
+|---------|------|-----|
+| Backend | Render Web Service | https://carbon-credit-api-7845.onrender.com |
+| Frontend | Render Static Site | https://carbon-credit-frontend.onrender.com |
+| Database | MongoDB Atlas M0 | cloud.mongodb.com |
+
+**Backend env vars on Render:** Set all variables from `backend/.env` in the Render dashboard.  
+**Frontend env vars on Render:** Set `VITE_API_URL=https://carbon-credit-api-7845.onrender.com`
+
+> ⚠️ Render free tier sleeps after 15 min of inactivity. First request may take ~30 seconds to wake up.
+
+---
+
+## 📊 Token Economy
 
 - **1 CCT** = 1 tonne CO₂ saved below IPCC baseline
-- Tokens minted only after AI verification passes
-- Each token carries: company, material, period, baseline, reported, timestamp
-- Marketplace: sellers (under-emitters) ↔ buyers (over-emitters)
-- Settlement: ERC-1155 on Polygon (conceptual in MVP, production-ready contract design)
+- Tokens minted only after AI verification passes (NORMAL verdict)
+- Marketplace: under-emitters (sellers) ↔ over-emitters (buyers)
+- Planned: ERC-1155 on Polygon (Hardhat + OpenZeppelin)
 
 ---
 
-## Future roadmap
+## 🗺️ Roadmap
 
-- [ ] Polygon smart contract deployment (Hardhat + OpenZeppelin ERC-1155)
-- [ ] IPFS metadata pinning (Pinata / NFT.Storage)
+- [ ] Polygon smart contract deployment (ERC-1155)
+- [ ] IPFS metadata pinning for each submission
+- [ ] Real marketplace with on-chain settlement
+- [ ] CSV export for admin and company reports
+- [ ] Password reset flow (forgot password)
+- [ ] Company profile editing
 - [ ] IoT sensor data ingestion
-- [ ] Multi-company wallet authentication
-- [ ] Live marketplace smart contract
-- [ ] 3-source dynamic baseline (IPCC + ML + sector peers)
+- [ ] Rate limiting on submission endpoint (slowapi)
+- [ ] Unit + integration tests (pytest + httpx)
+- [ ] GitHub Actions CI/CD pipeline
+
+---
+
+## 👤 Admin Account
+
+Create admin using the seeding script:
+
+```bash
+cd backend
+# Interactive:
+python create_admin.py
+
+# Non-interactive (edit email/password inside first):
+python seed_admin_atlas.py
+```
+
+Or set `ADMIN_EMAIL` + `ADMIN_PASSWORD` env vars on Render — admin account is auto-created on startup.
+
+---
+
+## 📄 License
+
+MIT License — see [LICENSE](LICENSE)

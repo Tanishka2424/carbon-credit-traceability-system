@@ -1,0 +1,155 @@
+.page { background: #060d0a; color: #e8f0e9; min-height: 100vh; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+
+/* ── Nav ───────────────────────────────────────────── */
+.nav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 48px; position: sticky; top: 0; z-index: 100;
+  background: rgba(6,13,10,0.85); backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(74,200,100,0.1);
+}
+.navLogo { display: flex; align-items: center; gap: 10px; }
+.navLogoMark {
+  background: linear-gradient(135deg, #4ac864, #1a8f35);
+  color: #fff; font-weight: 800; font-size: 13px; padding: 6px 10px;
+  border-radius: 8px; letter-spacing: 1px;
+}
+.navLogoText { font-weight: 700; font-size: 15px; color: #c8deca; }
+.navActions { display: flex; gap: 12px; }
+.navLogin {
+  padding: 8px 20px; border-radius: 8px; background: transparent;
+  border: 1px solid rgba(74,200,100,0.3); color: #4ac864;
+  font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s;
+}
+.navLogin:hover { background: rgba(74,200,100,0.08); }
+.navSignup {
+  padding: 8px 20px; border-radius: 8px;
+  background: linear-gradient(135deg, #4ac864, #1a8f35);
+  border: none; color: #fff; font-size: 13px; font-weight: 700;
+  cursor: pointer; transition: all 0.2s;
+}
+.navSignup:hover { opacity: 0.9; transform: translateY(-1px); }
+
+/* ── Hero ───────────────────────────────────────────── */
+.hero {
+  position: relative; min-height: 90vh;
+  display: flex; align-items: center; justify-content: center;
+  padding: 80px 48px; text-align: center; overflow: hidden;
+}
+.heroBg {
+  position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(74,200,100,0.07) 0%, transparent 70%);
+}
+.particle {
+  position: absolute; width: 2px; height: 2px; border-radius: 50%;
+  background: #4ac864; opacity: 0;
+  animation: float linear infinite;
+}
+@keyframes float {
+  0%   { transform: translateY(100vh); opacity: 0; }
+  10%  { opacity: 0.6; }
+  90%  { opacity: 0.2; }
+  100% { transform: translateY(-20px); opacity: 0; }
+}
+.heroContent { position: relative; max-width: 760px; }
+.heroBadge {
+  display: inline-block; padding: 6px 16px; border-radius: 20px;
+  background: rgba(74,200,100,0.1); border: 1px solid rgba(74,200,100,0.25);
+  color: #4ac864; font-size: 12px; font-weight: 600; margin-bottom: 24px;
+  letter-spacing: 0.5px;
+}
+.heroTitle { font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 800; line-height: 1.1; margin: 0 0 24px; color: #e8f0e9; }
+.heroGreen { color: #4ac864; }
+.heroSub { font-size: 1.1rem; color: #8fa892; line-height: 1.7; margin: 0 0 36px; max-width: 580px; margin-left: auto; margin-right: auto; }
+.heroCtas { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 48px; }
+.ctaPrimary {
+  padding: 14px 28px; border-radius: 10px; border: none;
+  background: linear-gradient(135deg, #4ac864, #1a8f35);
+  color: #fff; font-size: 15px; font-weight: 700; cursor: pointer;
+  transition: all 0.2s; box-shadow: 0 4px 20px rgba(74,200,100,0.3);
+}
+.ctaPrimary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(74,200,100,0.4); }
+.ctaSecondary {
+  padding: 14px 28px; border-radius: 10px;
+  background: transparent; border: 1px solid rgba(74,200,100,0.3);
+  color: #4ac864; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.2s;
+}
+.ctaSecondary:hover { background: rgba(74,200,100,0.08); }
+.heroStats { display: flex; align-items: center; justify-content: center; gap: 32px; }
+.hStat { display: flex; flex-direction: column; align-items: center; }
+.hNum { font-size: 1.4rem; font-weight: 800; color: #4ac864; font-family: 'DM Mono', monospace; }
+.hLabel { font-size: 11px; color: #5a6e5c; margin-top: 2px; }
+.hDivider { width: 1px; height: 32px; background: rgba(74,200,100,0.15); }
+
+/* ── Sections ───────────────────────────────────────── */
+.howSection, .featuresSection, .materialsSection {
+  padding: 80px 48px; max-width: 1200px; margin: 0 auto;
+}
+.sectionLabel { font-size: 11px; font-weight: 700; color: #4ac864; letter-spacing: 2px; margin-bottom: 12px; }
+.sectionTitle { font-size: 2rem; font-weight: 800; color: #e8f0e9; margin: 0 0 48px; }
+
+/* How it works */
+.stepsGrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; position: relative; }
+.stepCard {
+  background: rgba(26,35,24,0.6); border: 1px solid rgba(74,200,100,0.12);
+  border-radius: 12px; padding: 28px; position: relative;
+}
+.stepNum { font-size: 2rem; font-weight: 800; color: rgba(74,200,100,0.2); font-family: 'DM Mono', monospace; margin-bottom: 12px; }
+.stepTitle { font-size: 16px; font-weight: 700; color: #e8f0e9; margin-bottom: 8px; }
+.stepDesc { font-size: 13px; color: #8fa892; line-height: 1.6; }
+.stepArrow { position: absolute; right: -18px; top: 50%; transform: translateY(-50%); color: #4ac864; font-size: 20px; z-index: 1; }
+
+/* Features */
+.featuresGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.featureCard {
+  background: rgba(26,35,24,0.5); border: 1px solid rgba(74,200,100,0.1);
+  border-radius: 12px; padding: 24px; transition: all 0.2s;
+}
+.featureCard:hover { border-color: rgba(74,200,100,0.3); transform: translateY(-3px); }
+.featureIcon { font-size: 28px; margin-bottom: 12px; }
+.featureTitle { font-size: 15px; font-weight: 700; color: #e8f0e9; margin-bottom: 8px; }
+.featureDesc { font-size: 13px; color: #8fa892; line-height: 1.6; }
+
+/* Materials */
+.materialsGrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.materialCard {
+  background: rgba(26,35,24,0.5); border: 1px solid rgba(74,200,100,0.1);
+  border-radius: 10px; padding: 16px 20px;
+  display: flex; align-items: center; gap: 12px;
+}
+.materialDot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.materialName { font-size: 13px; font-weight: 600; color: #c8deca; flex: 1; }
+.materialFactor { font-size: 14px; font-weight: 700; font-family: 'DM Mono', monospace; }
+.materialUnit { font-size: 10px; color: #5a6e5c; }
+
+/* CTA Banner */
+.ctaBanner {
+  text-align: center; padding: 80px 48px;
+  background: linear-gradient(135deg, rgba(74,200,100,0.05) 0%, rgba(26,143,53,0.08) 100%);
+  border-top: 1px solid rgba(74,200,100,0.1);
+  border-bottom: 1px solid rgba(74,200,100,0.1);
+}
+.ctaBannerTitle { font-size: 2.2rem; font-weight: 800; color: #e8f0e9; margin: 0 0 16px; }
+.ctaBannerSub { color: #8fa892; font-size: 16px; margin: 0 0 36px; }
+
+/* Footer */
+.footer {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 24px 48px; border-top: 1px solid rgba(74,200,100,0.08);
+  flex-wrap: wrap; gap: 12px;
+}
+.footerLogo { display: flex; align-items: center; gap: 10px; font-size: 13px; color: #5a6e5c; }
+.footerRight { display: flex; gap: 12px; flex-wrap: wrap; }
+.footerBadge {
+  font-size: 11px; color: #5a6e5c; padding: 4px 10px;
+  border: 1px solid rgba(74,200,100,0.1); border-radius: 20px;
+}
+
+@media (max-width: 768px) {
+  .nav { padding: 16px 20px; }
+  .hero { padding: 60px 20px; }
+  .howSection, .featuresSection, .materialsSection { padding: 60px 20px; }
+  .stepsGrid { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .stepArrow { display: none; }
+  .featuresGrid { grid-template-columns: 1fr; }
+  .materialsGrid { grid-template-columns: 1fr 1fr; }
+}

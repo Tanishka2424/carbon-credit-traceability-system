@@ -1,17 +1,17 @@
 import React from 'react'
-import { Outlet, NavLink } from 'react-router-dom'
+import { Outlet, NavLink, useNavigate } from 'react-router-dom'
 import { logout, getUser } from '../utils/auth'
-import styles from './Layout.module.css'
+import styles from './AdminLayout.module.css'
 
 const NAV = [
-  { to: '/dashboard',   label: 'Dashboard',    icon: '▦' },
-  { to: '/submit',      label: 'Submit Report', icon: '⊕' },
-  { to: '/submissions', label: 'My Reports',   icon: '≡' },
-  { to: '/marketplace', label: 'Marketplace',  icon: '◈' },
+  { to: '/admin',              label: 'Overview',     icon: '▦', end: true },
+  { to: '/admin/companies',    label: 'Companies',    icon: '🏢' },
+  { to: '/admin/submissions',  label: 'All Reports',  icon: '≡' },
 ]
 
-export default function Layout() {
+export default function AdminLayout() {
   const user = getUser()
+  const navigate = useNavigate()
 
   return (
     <div className={styles.shell}>
@@ -19,8 +19,8 @@ export default function Layout() {
         <div className={styles.logo}>
           <span className={styles.logoMark}>CCT</span>
           <div>
-            <div className={styles.logoName}>Carbon Credit</div>
-            <div className={styles.logoSub}>Tracer</div>
+            <div className={styles.logoName}>Admin Portal</div>
+            <div className={styles.logoBadge}>🔐 Admin Access</div>
           </div>
         </div>
 
@@ -29,6 +29,7 @@ export default function Layout() {
             <NavLink
               key={n.to}
               to={n.to}
+              end={n.end}
               className={({ isActive }) =>
                 `${styles.navItem} ${isActive ? styles.active : ''}`
               }
@@ -40,20 +41,13 @@ export default function Layout() {
         </nav>
 
         <div className={styles.sidebarFooter}>
-          {user && (
-            <div className={styles.companyInfo}>
-              <div className={styles.companyName}>{user.company_name}</div>
-              <div className={styles.companyId}>{user.company_id}</div>
-            </div>
-          )}
-          <div className={styles.networkBadge}>
-            <span className={styles.dot} />
-            Polygon Testnet
+          <div className={styles.adminInfo}>
+            <div className={styles.adminEmail}>{user?.email}</div>
+            <div className={styles.adminRole}>Administrator</div>
           </div>
           <button className={styles.logoutBtn} onClick={() => logout()}>
             ⎋ Logout
           </button>
-          <div className={styles.version}>v2.0.0</div>
         </div>
       </aside>
 

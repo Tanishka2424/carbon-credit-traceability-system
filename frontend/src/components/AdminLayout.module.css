@@ -1,0 +1,53 @@
+.shell { display: flex; height: 100vh; background: #0a0f1a; font-family: 'Inter', sans-serif; }
+
+.sidebar {
+  width: 240px; min-width: 240px; background: #0d1220;
+  border-right: 1px solid rgba(99,102,241,0.15);
+  display: flex; flex-direction: column; padding: 24px 0;
+}
+
+.logo {
+  display: flex; align-items: center; gap: 12px;
+  padding: 0 20px 24px; border-bottom: 1px solid rgba(99,102,241,0.1);
+}
+
+.logoMark {
+  width: 40px; height: 40px; border-radius: 10px;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 14px; color: #fff; letter-spacing: 0.5px;
+  flex-shrink: 0;
+}
+
+.logoName { font-size: 14px; font-weight: 700; color: #e2e8f0; }
+.logoBadge { font-size: 10px; color: #6366f1; margin-top: 2px; font-weight: 600; }
+
+.nav { padding: 16px 12px; flex: 1; display: flex; flex-direction: column; gap: 4px; }
+
+.navItem {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px; border-radius: 8px;
+  color: #64748b; text-decoration: none; font-size: 13px; font-weight: 500;
+  transition: all 0.15s;
+}
+.navItem:hover { background: rgba(99,102,241,0.08); color: #a5b4fc; }
+.navItem.active { background: rgba(99,102,241,0.15); color: #818cf8; }
+.navIcon { font-size: 16px; width: 20px; text-align: center; }
+
+.sidebarFooter {
+  padding: 16px 20px 8px;
+  border-top: 1px solid rgba(99,102,241,0.1);
+}
+
+.adminInfo { margin-bottom: 12px; }
+.adminEmail { font-size: 12px; color: #94a3b8; word-break: break-all; }
+.adminRole  { font-size: 10px; color: #6366f1; font-weight: 600; margin-top: 2px; }
+
+.logoutBtn {
+  width: 100%; padding: 8px; border-radius: 6px;
+  background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.2);
+  color: #f87171; font-size: 12px; cursor: pointer; transition: all 0.15s;
+}
+.logoutBtn:hover { background: rgba(239,68,68,0.15); }
+
+.main { flex: 1; overflow-y: auto; padding: 32px; }
